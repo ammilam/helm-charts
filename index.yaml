@@ -3,56 +3,56 @@ entries:
   alertmanager-pubsub-service:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2021-11-14T15:18:43.221709-06:00"
+    created: "2021-11-14T15:32:58.259787-06:00"
     description: A Helm chart for Kubernetes
     digest: 7f4cbfc65d11687dc0a37fc618843888ed6f79563652821a91d2ea29ff941f35
     name: alertmanager-pubsub-service
     type: application
     urls:
-    - https://mattiaperi.github.io/helm-chart/alertmanager-pubsub-service-0.1.2.tgz
+    - https://ammilam.github.io/helm-chart/alertmanager-pubsub-service-0.1.2.tgz
     version: 0.1.2
   alertmanager-webex-teams:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2021-11-14T15:18:43.222096-06:00"
+    created: "2021-11-14T15:32:58.26022-06:00"
     description: A Helm chart for Kubernetes
     digest: ad98498a47d2354108186a11d67528f422538ad62ded00c37f88e34c2db19517
     name: alertmanager-webex-teams
     type: application
     urls:
-    - https://mattiaperi.github.io/helm-chart/alertmanager-webex-teams-0.1.3.tgz
+    - https://ammilam.github.io/helm-chart/alertmanager-webex-teams-0.1.3.tgz
     version: 0.1.3
   bigquery-exporter:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2021-11-14T15:18:43.222606-06:00"
+    created: "2021-11-14T15:32:58.260648-06:00"
     description: A Helm chart for Kubernetes
     digest: 441596430ade4716f2a3f525467a32bb627a0578dd75a7d3d0ff1216c330f60d
     name: bigquery-exporter
     type: application
     urls:
-    - https://mattiaperi.github.io/helm-chart/bigquery-exporter-0.1.0.tgz
+    - https://ammilam.github.io/helm-chart/bigquery-exporter-0.1.0.tgz
     version: 0.1.0
   gitlab-pipeline-monitoring:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2021-11-14T15:18:43.2231-06:00"
+    created: "2021-11-14T15:32:58.261204-06:00"
     description: A Helm chart for Kubernetes
     digest: 5deb532ef27dba1121966394d7d0dbff707618cc94371c9521fd07861f828490
     name: gitlab-pipeline-monitoring
     type: application
     urls:
-    - https://mattiaperi.github.io/helm-chart/gitlab-pipeline-monitoring-0.1.0.tgz
+    - https://ammilam.github.io/helm-chart/gitlab-pipeline-monitoring-0.1.0.tgz
     version: 0.1.0
   prometheus-rule:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2021-11-14T15:18:43.223389-06:00"
+    created: "2021-11-14T15:32:58.261498-06:00"
     description: A Helm chart for Kubernetes
     digest: 42a64befb13206677e186380d5784ee6ac3f665caa2a456cabf98e0a71863312
     name: prometheus-rule
     type: application
     urls:
-    - https://mattiaperi.github.io/helm-chart/prometheus-rule-0.1.6.tgz
+    - https://ammilam.github.io/helm-chart/prometheus-rule-0.1.6.tgz
     version: 0.1.6
-generated: "2021-11-14T15:18:43.221036-06:00"
+generated: "2021-11-14T15:32:58.259143-06:00"
