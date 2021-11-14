@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: company-docker.artifactory.company.com/prom-stack/alertmanager-webex-teams-integration
+  repository: ammilam/alertmanager-webex-teams-integration
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: 0.2.0

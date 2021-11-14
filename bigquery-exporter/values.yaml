@@ -9,12 +9,15 @@ image:
   tag: latest
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-queryConfigmapName: billing-insights-query
-credentialsSecretName: billing-insights
-project_id: company-billing-insights
-queryConfigmapName: billing-insights-query
+# configmap containing bigquery query .sql files
+queryConfigmapName: 
+# secret name containing service account key json
+credentialsSecretName: 
+# gcp project containing bigquery data sets
+project_id: 
 queryInterval: 5m
-queryFile: billing.sql
+# name of query file
+queryFile:
 securityContext:
   readOnlyRootFilesystem: true
   runAsNonRoot: false
