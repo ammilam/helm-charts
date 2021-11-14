@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: company-docker.artifactory.company.com/prom-stack/alertmanager-pubsub-service-integration
+  repository: ammilam/alertmanager-pubsub-service-integration
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: 0.2.0
@@ -13,8 +13,11 @@ image:
 imagePullSecrets: []
 nameOverride: alertmanager-pubsub-service
 fullnameOverride: ""
+# pubsub topic top publish to
 topic:
+# gcp project containing the pubsub topic
 project_id:
+# list alert routes for webex teams mapping
 alertRoutes:
 # enter in a receiver name and a webhook
 # receiver: https://webexapis.com/v1/webhooks/incoming/...
