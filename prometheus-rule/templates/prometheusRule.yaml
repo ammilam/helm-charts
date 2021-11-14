@@ -1,0 +1,10 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: {{ .Values.ruleName }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    prometheus: {{ .Values.commonLabels }}
+spec:
+  groups:
+  {{- toYaml .Values.groups | nindent 2 }}
