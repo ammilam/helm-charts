@@ -68,16 +68,23 @@ spec:
               mountPath: "/etc/vault/secret"
               readOnly: false
             - name: account
-              mountPath: {{ .Values.gcp_credentials.mount_path }}
+              mountPath: "{{ .Values.gcp_credentials.mount_path }}"
       {{- end}}
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          command: {{ .Values.commmand }}
+          command: [ "/bin/bash", "-c", "--" ]
           env:
           - name: GOOGLE_APPLICATION_CREDENTIALS
             value: "{{ .Values.gcp_credentials.mount_path }}/{{ .Values.gcp_credentials.key_file_name }}"
-          args: {{ .Values.args }}
+          args:
+          - |
+            until [ -f {{ .Values.gcp_credentials.mount_path }}/{{ .Values.gcp_credentials.key_file_name }} ]
+            do
+              sleep 5
+            done
+            {{ .Values.command  | nindent 12 }}
+
           ports:
             - name: http
               containerPort: 80
