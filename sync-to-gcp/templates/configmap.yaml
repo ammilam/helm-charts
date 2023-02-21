@@ -1,0 +1,44 @@
+{{- if .Values.gcp_credentials.vault.enable_vault_agent }}
+apiVersion: v1
+data:
+  vault-agent-config.hcl: |
+    vault {
+      address = "{{ .Values.gcp_credentials.vault.vault_addr }}"
+    }
+    auto_auth {
+      method {
+        type      = "approle"
+        mount_path = "{{ .Values.gcp_credentials.vault.mount_path }}"
+        namespace = "{{ .Values.gcp_credentials.vault.vault_namespace }}"
+        config = {
+          role_id_file_path = "/etc/vault/secret/role_id"
+          secret_id_file_path = "/etc/vault/secret/secret_id"
+          remove_secret_id_file_after_reading = false
+        }
+      }
+      sink "file" {
+          config = {
+              path = "/dev/shm/.agent-token"
+          }
+      }
+    }
+
+    template {
+      error_on_missing_key = true
+      destination = "{{ .Values.gcp_credentials.mount_path }}/{{ .Values.gcp_credentials.key_file_name }}"
+      contents = <<EOT
+      {{ "{{-" }} with secret "{{ .Values.gcp_credentials.vault.secret_endpoint }}" {{ "-}}" }}
+      {{ "{{" }} base64Decode .Data.private_key_data {{ "}}" }}
+      {{ "{{" }} end {{ "}}" }}
+      EOT
+      }
+    template_config {
+      exit_on_retry_failure = true
+    }
+kind: ConfigMap
+metadata:
+  namespace: {{ .Release.namespace }}
+  name: {{ include "sync-to-gcp.fullname" . }}
+  labels:
+    {{- include "sync-to-gcp.labels" . | nindent 4 }}
+{{- end}}

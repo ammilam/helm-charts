@@ -1,0 +1,122 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "sync-to-gcp.fullname" . }}
+  labels:
+    {{- include "sync-to-gcp.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "sync-to-gcp.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "sync-to-gcp.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "sync-to-gcp.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      volumes:
+      {{- if not .Values.gcp_credentials.vault.enable_vault_agent }}
+      - name: account
+        secret:
+          secretName: {{ .Values.gcp.k8s_secret_service_account_json }}
+          optional: true
+      {{- end }}
+      {{- if .Values.gcp_credentials.vault.enable_vault_agent }}
+      - emptyDir: {}
+        name: account
+      - name: {{ .Values.gcp_credentials.vault.secret }}
+        secret:
+          secretName: {{ .Values.gcp_credentials.vault.secret }}
+          optional: true
+      - name: config
+        configMap:
+          items:
+            - key: vault-agent-config.hcl
+              path: vault-agent-config.hcl
+          name: {{ include "sync-to-gcp.fullname" . }}
+      - emptyDir: {}
+        name: shared-data
+      {{- end }}
+      containers:
+      {{- if .Values.gcp_credentials.vault.enable_vault_agent }}
+        - name: vault-agent
+          args:
+            - agent
+            - -config=/etc/vault/vault-agent-config.hcl
+            - -log-level=debug
+          env:
+          - name: VAULT_ADDR
+            value: "{{ .Values.gcp_credentials.vault.vault_addr }}"
+          image: vault
+          volumeMounts:
+            - mountPath: /etc/vault
+              name: config
+            - name: {{ .Values.gcp_credentials.vault.secret }}
+              mountPath: "/etc/vault/secret"
+              readOnly: false
+            - name: account
+              mountPath: {{ .Values.gcp_credentials.mount_path }}
+      {{- end}}
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: {{ .Values.commmand }}
+          env:
+          - name: GOOGLE_APPLICATION_CREDENTIALS
+            value: "{{ .Values.gcp_credentials.mount_path }}/{{ .Values.gcp_credentials.key_file_name }}"
+          args: {{ .Values.args }}
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          livenessProbe:
+            exec:
+              command:
+                - grep
+                - -q
+                - "."
+                - {{ .Values.gcp_credentials.mount_path }}/{{ .Values.gcp_credentials.key_file_name }}
+          readinessProbe:
+            exec:
+              command:
+                - grep
+                - -q
+                - "."
+                - {{ .Values.gcp_credentials.mount_path }}/{{ .Values.gcp_credentials.key_file_name }}
+          volumeMounts:
+          - name: account
+            mountPath: {{ .Values.gcp_credentials.mount_path }}
+          {{- if .Values.gcp_credentials.vault.enable_vault_agent }}
+          - name: {{ .Values.gcp_credentials.vault.secret }}
+            mountPath: "/etc/vault/secret"
+            readOnly: true
+          - mountPath: /etc/vault
+            name: config
+          {{- end }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
