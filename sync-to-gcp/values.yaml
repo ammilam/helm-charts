@@ -4,7 +4,6 @@
 
 replicaCount: 1
 
-command: ["./sync-to-gcp", "--path=./test/test.txt", "--bucket=test-bucket-1234"]
 command: |-
   ./sync-to-gcp --path=./test/test.txt --bucket=test-bucket-1234
 
