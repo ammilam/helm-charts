@@ -1,0 +1,76 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "stackdriver-exporter.fullname" . }}
+  labels:
+    {{- include "stackdriver-exporter.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "stackdriver-exporter.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+    {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      labels:
+        {{- include "stackdriver-exporter.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "stackdriver-exporter.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      volumes:
+      - name: credentials
+        secret:
+          secretName: {{ .Values.secretName }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          volumeMounts:
+          - name: credentials
+            mountPath: "/var/secrets/gcp/credentials"
+          args:
+          - '--google.project-id={{ .Values.project_id }}'
+          - '--monitoring.metrics-type-prefixes={{ join "," .Values.metrics }}'
+          - '--monitoring.metrics-ingest-delay'
+          #- '--log.level={{ .Values.log_level }}'
+#          - '--monitoring.metrics-interval={{ .Values.stackdriverScrape }}'
+#          - '--monitoring.metrics-offset={{ .Values.stackdriverOffset }}'
+          env:
+          - name: GOOGLE_APPLICATION_CREDENTIALS
+            value: /var/secrets/gcp/credentials/account.json
+          - name: STACKDRIVER_EXPORTER_MONITORING_METRICS_TYPE_PREFIXES
+            value: '{{ join "," .Values.metrics }}'
+          - name: STACKDRIVER_EXPORTER_GOOGLE_PROJECT_ID
+            value: {{ .Values.project_id }}
+          - name: STACKDRIVER_EXPORTER_MONITORING_METRICS_INTERVAL
+            value: {{ .Values.stackdriverScrape }}
+          - name: STACKDRIVER_EXPORTER_MONITORING_METRICS_OFFSET
+            value: {{ .Values.stackdriverOffset }}
+          ports:
+            - name: http
+              containerPort: 9255
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

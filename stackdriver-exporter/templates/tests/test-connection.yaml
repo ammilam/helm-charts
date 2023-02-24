@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "stackdriver-exporter.fullname" . }}-test-connection"
+  labels:
+    {{- include "stackdriver-exporter.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test-success
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['{{ include "stackdriver-exporter.fullname" . }}:{{ .Values.service.port }}']
+  restartPolicy: Never

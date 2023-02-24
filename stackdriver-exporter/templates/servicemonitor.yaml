@@ -1,0 +1,37 @@
+{{- if .Values.prometheus.serviceMonitor.enabled }}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ include "stackdriver-exporter.fullname" . }}
+  {{- if .Values.prometheus.serviceMonitor.namespace }}
+  namespace: {{ .Values.prometheus.serviceMonitor.namespace }}
+  {{- end }}
+  labels:
+    prometheus: {{ .Values.prometheus.serviceMonitor.prometheusServiceMonitorLabel }}
+    app.kubernetes.io/name: {{ include "stackdriver-exporter.name" . }}
+    helm.sh/chart: {{ include "stackdriver-exporter.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    {{- if .Values.prometheus.serviceMonitor.additionalLabels }}
+{{ toYaml .Values.prometheus.serviceMonitor.additionalLabels | indent 4 -}}
+    {{- end }}
+spec:
+  jobLabel: {{ include "stackdriver-exporter.name" . }}
+  selector:
+      matchLabels:
+        app.kubernetes.io/name: {{ include "stackdriver-exporter.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        helm.sh/chart: {{ include "stackdriver-exporter.chart" . }}
+  namespaceSelector:
+    matchNames:
+    - {{ .Release.Namespace }}
+  endpoints:
+  - port: http
+    interval: {{ .Values.prometheus.serviceMonitor.interval }}
+    honorTimestamps: {{ .Values.prometheus.serviceMonitor.honorTimestamps }}
+    scrapeTimeout: {{ .Values.prometheus.serviceMonitor.scrapeTimeout }}
+    honorLabels: {{ .Values.prometheus.serviceMonitor.honorLabels }}
+  {{- if .Values.prometheus.serviceMonitor.additionalConfig }}
+{{ toYaml .Values.prometheus.serviceMonitor.additionalConfig | indent 2}}
+  {{- end }}
+{{- end }}
