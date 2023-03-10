@@ -41,7 +41,8 @@ ingress:
   #  - secretName: chart-example-tls
   #    hosts:
   #      - chart-example.local
-secretName: kube-prometheus-stack-jwt
+gcp_credentials:
+  secretName:
 metrics:
 - logging.googleapis.com/user/gitlab-pipeline-monitoring
 
