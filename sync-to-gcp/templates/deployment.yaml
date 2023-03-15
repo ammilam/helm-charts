@@ -28,6 +28,11 @@ spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       volumes:
+      {{- if .Values.nfs.server }}
+      - name: "{{ include "sync-to-gcp.fullname" . }}-nfs"
+        persistentVolumeClaim:
+          claimName: "{{ include "sync-to-gcp.fullname" . }}-nfs"
+      {{- end }}
       {{- if not .Values.gcp_credentials.vault.enable_vault_agent }}
       - name: account
         secret:
@@ -73,6 +78,9 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          securityContext:
+            capabilities:
+              add: ["SYS_ADMIN"]
           command: [ "/bin/bash", "-c", "--" ]
           env:
           - name: GOOGLE_APPLICATION_CREDENTIALS
@@ -104,6 +112,10 @@ spec:
                 - "."
                 - {{ .Values.gcp_credentials.mount_path }}/{{ .Values.gcp_credentials.key_file_name }}
           volumeMounts:
+          {{- if .Values.nfs.server }}
+          - name: "{{ include "sync-to-gcp.fullname" . }}-nfs"
+            mountPath: {{ default "/data" .Values.nfs.container_mount_path }}
+          {{- end }}
           - name: account
             mountPath: {{ .Values.gcp_credentials.mount_path }}
           {{- if .Values.gcp_credentials.vault.enable_vault_agent }}

@@ -7,6 +7,11 @@ replicaCount: 1
 command: |-
   ./sync-to-gcp --path=./test/test.txt --bucket=test-bucket-1234
 
+nfs:
+  server: ""
+  server_path: ""
+  container_mount_path: ""
+
 # used to mount a gcp service account json key to the pod
 gcp_credentials:
   # where the mount the gcp service account json key in the pod
@@ -46,7 +51,7 @@ serviceAccount:
 
 podAnnotations: {}
 
-podSecurityContext: {}
+podSecurityContext:
   # fsGroup: 2000
 
 securityContext: {}

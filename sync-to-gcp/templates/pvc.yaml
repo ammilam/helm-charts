@@ -1,0 +1,14 @@
+{{- if .Values.nfs.server }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: "{{ include "sync-to-gcp.fullname" . }}-nfs"
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: ""
+  resources:
+    requests:
+      storage: 80Gi
+  volumeName: "{{ include "sync-to-gcp.fullname" . }}-nfs"
+{{- end }}
