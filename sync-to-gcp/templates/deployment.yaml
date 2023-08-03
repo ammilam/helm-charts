@@ -65,8 +65,7 @@ spec:
           env:
           - name: VAULT_ADDR
             value: "{{ .Values.gcp_credentials.vault.vault_addr }}"
-          image: "{{ .Values.vault.image.repository }}:{{ .Values.vault.image.tag }}"
-          imagePullPolicy: {{ .Values.vault.image.pullPolicy }}
+          image: {{ .Values.image.vault }}
           volumeMounts:
             - mountPath: /etc/vault
               name: config
