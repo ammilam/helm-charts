@@ -24,6 +24,11 @@ gcp_credentials:
   # if vault is available with approle auth method and roleset integration to gcp
   # will dynamically mount and rotate service account json file to the pod
   vault:
+    image: 
+      repository: vault
+      tag: 1.13.3
+      pullPolicy: IfNotPresent
+
     enable_vault_agent: true
     secret: "a-k8s-secret" # should have role_id="a-vault-role-id" secret_id="a-vault-secret-id" in the secret data
     vault_addr: https://vault.company.com
