@@ -3,7 +3,7 @@ entries:
   alertmanager-pubsub-service:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2023-08-03T13:41:33.742432-05:00"
+    created: "2023-09-12T14:57:36.649029-05:00"
     description: A Helm chart that creates a deployment that routes alerts from Alertmanager
       to a Pubsub topic
     digest: 1cc7b67f186eeb86e6f15754bf10b2d0bad355bf1e687b4fc383079e797f93cb
@@ -15,7 +15,7 @@ entries:
   alertmanager-webex-teams:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2023-08-03T13:41:33.742663-05:00"
+    created: "2023-09-12T14:57:36.656931-05:00"
     description: A Helm chart that creates a deployment to route alerts from Alertmanager
       to webex teams
     digest: 1a1eedac9ed57228c1e61086b2fcb119f9e0f06f877a0d269df56e0bb1217cb8
@@ -27,7 +27,7 @@ entries:
   bigquery-exporter:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2023-08-03T13:41:33.742888-05:00"
+    created: "2023-09-12T14:57:36.657346-05:00"
     description: Helm chart that deploys https://github.com/m-lab/prometheus-bigquery-exporter
     digest: 791a9720a56590cf3902a41347510189723ea0387e9b5acd2e3c0aeca5ea7f38
     name: bigquery-exporter
@@ -38,7 +38,7 @@ entries:
   gcp-ingress-configs:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2023-08-03T13:41:33.743223-05:00"
+    created: "2023-09-12T14:57:36.657652-05:00"
     description: Manages custom resources for Google Compute Ingress BackendConfig/FrontendConfig
     digest: c09af8f825d9a3f6f28628146e12edaf3f2a5053f45e1f8236df10c09776946c
     name: gcp-ingress-configs
@@ -49,7 +49,7 @@ entries:
   gitlab-pipeline-monitoring:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2023-08-03T13:41:33.743748-05:00"
+    created: "2023-09-12T14:57:36.657921-05:00"
     description: A Helm chart that deploys a Gitlab pipeline monitoring microservice
     digest: f769add5dec5dfcaef518165634954730f7cde29597f0ece54d3af753cb449a9
     name: gitlab-pipeline-monitoring
@@ -57,10 +57,21 @@ entries:
     urls:
     - https://ammilam.github.io/helm-charts/gitlab-pipeline-monitoring-0.1.0.tgz
     version: 0.1.0
+  managed-cert:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2023-09-12T14:57:36.658019-05:00"
+    description: A Helm chart for Kubernetes
+    digest: d18127d2cb990f8ef64bf0631664adec83945f3e9aac5741ef598a1b8f4de4cc
+    name: managed-cert
+    type: application
+    urls:
+    - https://ammilam.github.io/helm-charts/managed-cert-0.1.0.tgz
+    version: 0.1.0
   prometheus-rule:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2023-08-03T13:41:33.743904-05:00"
+    created: "2023-09-12T14:57:36.65836-05:00"
     description: A Helm chart that creates prometheus rules
     digest: a08a11d18c46fbba7fd02572ebd06da0ee2373d0077a27335ea90c3f0d9d95b3
     name: prometheus-rule
@@ -71,7 +82,7 @@ entries:
   stackdriver-exporter:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2023-08-03T13:41:33.744446-05:00"
+    created: "2023-09-12T14:57:36.659099-05:00"
     description: A Helm chart for Kubernetes
     digest: ee964e59a85cc76848a6ba66c10b4b92f780544f0d08258a679b8e3e2bb45e67
     name: stackdriver-exporter
@@ -81,7 +92,7 @@ entries:
     version: 0.4.0
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2023-08-03T13:41:33.746318-05:00"
+    created: "2023-09-12T14:57:36.661757-05:00"
     description: A Helm chart for Kubernetes
     digest: ee964e59a85cc76848a6ba66c10b4b92f780544f0d08258a679b8e3e2bb45e67
     name: stackdriver-exporter
@@ -91,7 +102,7 @@ entries:
     version: 0.4.0
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2023-08-03T13:41:33.744181-05:00"
+    created: "2023-09-12T14:57:36.658752-05:00"
     description: A Helm chart for Kubernetes
     digest: a3ca41a530cfb545775222ab743209d71fedf3ec52a4bd568bd3d0a252f26d40
     name: stackdriver-exporter
@@ -102,7 +113,7 @@ entries:
   sync-to-gcp:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2023-08-03T13:41:33.746024-05:00"
+    created: "2023-09-12T14:57:36.661467-05:00"
     description: A Helm chart for Kubernetes
     digest: f8c187c48dbd5ad55de2db8fff346a8dce86428d5047e35a4aa184db6f9b8433
     name: sync-to-gcp
@@ -112,7 +123,7 @@ entries:
     version: 0.2.2
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2023-08-03T13:41:33.745724-05:00"
+    created: "2023-09-12T14:57:36.660907-05:00"
     description: A Helm chart for Kubernetes
     digest: 85b09cbe85dfd91b2b20ece1eb5eef074c2b78102e97bbecf89d8dde505e9cb6
     name: sync-to-gcp
@@ -122,7 +133,7 @@ entries:
     version: 0.2.1
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2023-08-03T13:41:33.745392-05:00"
+    created: "2023-09-12T14:57:36.660353-05:00"
     description: A Helm chart for Kubernetes
     digest: a1190b2da705cb517881ca1419aa36a15262663e373d804e2b591d586c9544a9
     name: sync-to-gcp
@@ -132,7 +143,7 @@ entries:
     version: 0.2.0
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2023-08-03T13:41:33.745046-05:00"
+    created: "2023-09-12T14:57:36.659773-05:00"
     description: A Helm chart for Kubernetes
     digest: 63d60ca6864747ec00891bc55fd77ac22344df12ef6ffb74978630a8263329f4
     name: sync-to-gcp
@@ -142,7 +153,7 @@ entries:
     version: 0.1.1
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2023-08-03T13:41:33.744722-05:00"
+    created: "2023-09-12T14:57:36.659417-05:00"
     description: A Helm chart for Kubernetes
     digest: c645fa8145c3a0f0e5bd9de3cc61632188349b7ca734c89c4bdbff1fa6862214
     name: sync-to-gcp
@@ -150,4 +161,4 @@ entries:
     urls:
     - https://ammilam.github.io/helm-charts/sync-to-gcp-0.1.0.tgz
     version: 0.1.0
-generated: "2023-08-03T13:41:33.742106-05:00"
+generated: "2023-09-12T14:57:36.648467-05:00"

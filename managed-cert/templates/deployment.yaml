@@ -1,0 +1,11 @@
+apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
+metadata:
+  name: {{ template "managed-cert.fullname" . }}
+  labels:
+    app: {{ template "managed-cert.name" . }}
+    chart: {{ template "managed-cert.chart" . }}
+    release: {{ .Release.Name }}
+spec:
+  domains:
+    {{- .Values.domains | toYaml | nindent 4 }}
