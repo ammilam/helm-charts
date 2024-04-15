@@ -1,0 +1,17 @@
+{{ if .Values.nfs.server }}
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: "{{ include "file-sync-to-gcp.fullname" . }}-nfs"
+spec:
+  capacity:
+    storage: 80Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Recycle # Reclaim policies are defined below
+  nfs:
+    server: {{ .Values.nfs.server }}
+    path: {{ .Values.nfs.server_path }}
+  mountOptions:
+    - nfsvers=3
+{{- end }}
