@@ -34,7 +34,7 @@ gcp_credentials:
 image:
   repository: ghcr.io/ammilam/file-sync-to-gcp
   pullPolicy: IfNotPresent
-  tag: latest
+  tag: v0.0.3
   vault: vault:1.13.3
 
 imagePullSecrets: []
